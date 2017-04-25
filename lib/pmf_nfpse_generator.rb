@@ -229,17 +229,16 @@ Conforme lei federal 12.741/2012 da transparência, total impostos pagos R$ #{ta
 
   def zipcode_in_postmon_api
     return unless zipcode.present?
-    cep = zipcode
-    return errors.add(:zipcode, :length) unless cep.size == 8
-    response = validate_zipcode_in_postmon_api(cep)
+    return errors.add(:zipcode, :length) unless zipcode.size == 8
+    response = validate_zipcode_in_postmon_api(zipcode)
     return errors.add(:zipcode, :invalid) unless response.code == 200
     parsed_response = response.parsed_response
     errors.add(:zipcode, :invalid) if parsed_response['cidade_info'].blank?
   end
 
-  def zipcode_strip(cep)
-    return unless cep
-    cep.delete('.').delete('/').delete('-').delete(' ')
+  def zipcode_strip(zip)
+    return unless zip
+    zip.delete('.').delete('/').delete('-').delete(' ')
   end
 
   def validate_zipcode_in_postmon_api(cep)
