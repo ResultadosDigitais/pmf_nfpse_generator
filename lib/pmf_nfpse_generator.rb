@@ -23,7 +23,7 @@ class PmfNfpseGenerator
     self.cpf_cnpj = attrs[:cpf_cnpj]
     self.name = attrs[:name]
     self.address = attrs[:address]
-    self.zipcode = attrs[:zipcode]
+    self.zipcode = zipcode_strip(attrs[:zipcode])
     self.state = attrs[:state]
     self.city = attrs[:city]
     self.email = attrs[:email]
@@ -53,7 +53,7 @@ class PmfNfpseGenerator
   end
 
   # {"city"=>"Curitiba", "state"=>"PR", "city_ibge_code"=>"4106902", "source"=>"csv"}
-  def to_xml!
+  def to_xml
     return nil unless self.valid?
 
     city_info = get_city_info(zipcode.gsub(".",""), state, city)
@@ -183,7 +183,6 @@ Conforme lei federal 12.741/2012 da transparência, total impostos pagos R$ #{ta
     if city_info
       return { "city" => city_info["Nome_Município"], "state" => city_info["UF"], "city_ibge_code" => city_info["UF_MUNIC"], "source" => "csv" }
     end
-    cep = zipcode_strip(cep)
     response = HTTParty.get("http://api.postmon.com.br/v1/cep/#{cep}")
     resp = response.parsed_response
     { "city" => resp["cidade"], "state" => resp["estado"], "city_ibge_code" => resp["cidade_info"]["codigo_ibge"], "source" => "postmon" }
@@ -230,15 +229,16 @@ Conforme lei federal 12.741/2012 da transparência, total impostos pagos R$ #{ta
 
   def zipcode_in_postmon_api
     return unless zipcode.present?
-    cep = zipcode_strip(zipcode)
+    cep = zipcode
     return errors.add(:zipcode, :length) unless cep.size == 8
     response = validate_zipcode_in_postmon_api(cep)
     return errors.add(:zipcode, :invalid) unless response.code == 200
     parsed_response = response.parsed_response
-    return errors.add(:zipcode, :invalid) if parsed_response['cidade_info'].blank?
+    errors.add(:zipcode, :invalid) if parsed_response['cidade_info'].blank?
   end
 
   def zipcode_strip(cep)
+    return unless cep
     cep.delete('.').delete('/').delete('-').delete(' ')
   end
 
