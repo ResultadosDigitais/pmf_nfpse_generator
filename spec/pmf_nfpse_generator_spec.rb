@@ -131,7 +131,7 @@ describe PmfNfpseGenerator do
          end
        end
 
-       context "invalid cpf_cnpj" do
+       context "invalid billing_date" do
          it do
            lib.billing_date = "#{1.day.from_now.day}/#{1.day.from_now.month}/#{1.day.from_now.year}"
            VCR.use_cassette('to_xml_invalid_cpf_cnpj') do
