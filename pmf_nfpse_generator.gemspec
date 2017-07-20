@@ -8,9 +8,8 @@ Gem::Specification.new do |s|
   s.description   = 'Gem to generate NFPS-e XML`s of Florianópolis, SC, Brazil'
   s.authors       = ['Pedro Bachiega']
   s.email         = 'pedro@pedrobachiega.com'
-  s.files         = ['lib/cidades_brasil.csv', 'lib/pmf_nfpse_generator.rb']
-  # s.files         += Dir['config/**/*']
-  # s.require_paths = %w[lib config]
+  s.files         = Dir['README.md', 'config/**/*', 'lib/**/*']
+  s.require_path  = 'lib'
   s.homepage      = 'https://github.com/ResultadosDigitais/pmf_nfpse_generator'
   s.license       = 'MIT'
 
