@@ -1,16 +1,18 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'pmf_nfpse_generator/version'
+
+version = File.read(File.expand_path('GEM_VERSION', __dir__)).strip
 
 Gem::Specification.new do |s|
   s.name          = 'pmf_nfpse_generator'
-  s.version       = '0.1.0'
-  s.date          = '2014-04-06'
+  s.version       = version
+
   s.summary       = 'PMF (SC) NFPS-e Generator'
   s.description   = 'Gem to generate NFPS-e XML`s of Florianópolis, SC, Brazil'
   s.authors       = ['Pedro Bachiega']
   s.email         = 'pedro@pedrobachiega.com'
+
   s.files = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   s.require_paths = ['lib']
   s.homepage      = 'https://github.com/ResultadosDigitais/pmf_nfpse_generator'
