@@ -13,8 +13,10 @@ Gem::Specification.new do |s|
   s.authors       = ['Pedro Bachiega']
   s.email         = 'pedro@pedrobachiega.com'
 
-  s.files = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
-  s.require_paths = ['lib']
+  # s.files = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+  # s.require_paths = ['lib']
+  s.files         = Dir['README.md', 'GEM_VERSION', 'lib/**/*', 'config/**/*']
+  s.require_path  = 'lib'
   s.homepage      = 'https://github.com/ResultadosDigitais/pmf_nfpse_generator'
   s.license       = 'MIT'
 
