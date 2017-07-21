@@ -146,11 +146,11 @@ describe PmfNfpseGenerator do
     end
   end
 
-  describe '#zipcode_strip' do
+  describe '#only_numbers_strip' do
     it do
       zip_actual = '88.05/1 - 0.0.0  '
       zip_expected = '88051000'
-      expect(lib.send(:zipcode_strip, zip_actual)).to eq(zip_expected)
+      expect(lib.send(:only_numbers_strip, zip_actual)).to eq(zip_expected)
     end
   end
 end

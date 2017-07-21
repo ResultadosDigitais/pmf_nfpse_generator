@@ -23,7 +23,7 @@ class PmfNfpseGenerator
     self.cpf_cnpj = attrs[:cpf_cnpj]
     self.name = attrs[:name]
     self.address = attrs[:address]
-    self.zipcode = zipcode_strip(attrs[:zipcode])
+    self.zipcode = only_numbers_strip(attrs[:zipcode])
     self.state = attrs[:state]
     self.city = attrs[:city]
     self.email = attrs[:email]
@@ -153,7 +153,7 @@ Conforme lei federal 12.741/2012 da transparência, total impostos pagos R$ #{ta
             municipio.CodigoMunicipio city_info['city_ibge_code']
           end
           endereco.CodigoPostal do |codPostal|
-            codPostal.CEP zipcode.delete('.').delete('/').delete('-').delete(' ')
+            codPostal.CEP only_numbers_strip(zipcode)
           end
           endereco.UF state.delete(' ')
         end # endereço
@@ -167,7 +167,7 @@ Conforme lei federal 12.741/2012 da transparência, total impostos pagos R$ #{ta
   private
 
   def format_cpf_cnpj
-    cpf_cnpj.delete('.').delete('/').delete('-').delete('_').delete(' ')
+    only_numbers_strip(cpf_cnpj)
   end
 
   def get_city_info(zip, state = '', cityname = '')
@@ -234,9 +234,9 @@ Conforme lei federal 12.741/2012 da transparência, total impostos pagos R$ #{ta
     end
   end
 
-  def zipcode_strip(zip)
-    return unless zip
-    zip.delete('^0-9')
+  def only_numbers_strip(str)
+    return unless str
+    str.delete('^0-9')
   end
 
   def validate_city_info
